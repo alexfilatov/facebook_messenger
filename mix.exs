@@ -5,7 +5,7 @@ defmodule FacebookMessenger.Mixfile do
     [app: :facebook_messenger,
      name: "ExFacebookMessenger",
      source_url: "https://github.com/oarrabi/facebook_messenger",
-     version: "0.3.0",
+     version: "0.3.1",
      docs: [ extras: ["README.md"] ],
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
@@ -40,9 +40,9 @@ defmodule FacebookMessenger.Mixfile do
          {:earmark, "~> 0.1", only: :docs}]
 
     if Mix.env == :test do
-      [{:coverex, "~> 1.4.8", only: :test}, {:poison, "~> 2.1.0 or ~> 3.0", override: true} | d]
+      [{:coverex, "~> 1.4.8", only: :test}, {:poison, "~> 2.2.0 or ~> 3.0", override: true} | d]
     else
-      [{:poison, "~> 2.1.0 or ~> 3.0"} | d]
+      [{:poison, "~> 2.2.0 or ~> 3.0"} | d]
     end
   end
 
