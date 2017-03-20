@@ -1,8 +1,11 @@
 defmodule FacebookMessenger.RequestManager do
+  require Logger
   @moduledoc """
   module respinsible to post a request to facebook
   """
   def post(url: url, body: body) do
+    Logger.info "BODY:: #{inspect body}"
+
     HTTPotion.post url,
     body: body, headers: ["Content-Type": "application/json"]
   end

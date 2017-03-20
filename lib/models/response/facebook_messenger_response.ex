@@ -80,6 +80,7 @@ defmodule FacebookMessenger.Response do
     cond do
       Map.has_key?(messaging, "postback") -> postback_parser
       Map.has_key?(messaging, "message") -> text_message_parser
+      # true -> text_message_parser
     end
   end
 

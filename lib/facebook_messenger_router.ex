@@ -11,6 +11,7 @@ defmodule FacebookMessenger.Router do
     end
   end
 
+
   defp do_challenge(%{request_path: path} = conn, endpoint, opts)
   when path != endpoint and endpoint != nil do
     inform_challange(Keyword.get(opts, :challange_failed))
