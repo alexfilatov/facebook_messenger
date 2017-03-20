@@ -37,7 +37,7 @@ defmodule FacebookMessenger do
   """
   def parse_message(params) when is_bitstring(params) do
     response = FacebookMessenger.Response.parse(params)
-    Logger.info("Recevied messsages:: #{inspect(response)}")
+    Logger.info("Recevied messsages bitstring:: #{inspect(response)}")
 
     {:ok, response}
   end
