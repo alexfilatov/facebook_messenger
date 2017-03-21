@@ -51,9 +51,7 @@ defmodule FacebookMessenger.Response do
   """
   @spec messages(FacebookMessenger.Response.t) :: [String.t]
   def messages(%{entry: entries}) do
-    entries
-    |> get_messaging_struct()
-    |> Enum.map(&( &1 |> Map.get(:message)))
+    entries |> get_messaging_struct()
   end
 
   @doc """

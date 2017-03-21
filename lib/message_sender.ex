@@ -116,7 +116,7 @@ defmodule FacebookMessenger.Sender do
   """
   @spec json_payload_attachment(String.t, FacebookMessenger.Model.Attachment.t) :: String.t
   def json_payload_attachment(recepient, attachment) do
-    payload(recepient, attachment)
+    payload_attachment(recepient, attachment)
     |> Poison.encode
     |> elem(1)
   end
