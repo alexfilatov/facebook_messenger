@@ -116,7 +116,6 @@ defmodule FacebookMessenger.Model.Attachment.Template.Element.DefaultAction do
 end
 
 
-
 defmodule FacebookMessenger.Model.Attachment.Template.Element do
   defstruct title: nil, image_url: nil, subtitle: nil, default_action: nil, buttons: []
   @type t :: %{title: binary, image_url: binary, subtitle: binary,
@@ -126,9 +125,4 @@ end
 defmodule FacebookMessenger.Model.Message do
   defstruct text: nil, quick_replies: nil
   @type t :: %{text: binary, quick_replies: List.t}
-end
-
-defmodule FacebookMessenger.Model.QuickReply do
-  defstruct content_type: "text", title: nil, payload: nil
-  @type t :: %{content_type: binary, title: binary, payload: binary}
 end

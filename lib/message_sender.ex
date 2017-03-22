@@ -24,6 +24,24 @@ defmodule FacebookMessenger.Sender do
   end
 
   @doc """
+  sends quick reply to the the recepient
+
+  * :recepient - the recepient to send the message to
+  * :quick_reply - FacebookMessenger.Model.QuickReply.t
+  """
+  @spec send_quick_reply(String.t, FacebookMessenger.Model.QuickReply.t) :: HTTPotion.Response.t
+  def send_quick_reply(recepient, quick_reply) do
+    body = json_payload_quick_reply(recepient, quick_reply)
+    Logger.info "ABOUNT TO SEND:: #{inspect body}"
+    res = manager.post(
+      url: url,
+      body: body
+    )
+    Logger.info("RESPONSE FROM FB:: #{inspect(res)}")
+    res
+  end
+
+  @doc """
   sends an attachment
 
   * :recepient - the recepient to send the message to
@@ -52,6 +70,21 @@ defmodule FacebookMessenger.Sender do
     res = manager.post(url: settings_url, body: body)
     Logger.info("RESPONSE FROM FB:: #{inspect res}")
     res
+  end
+
+  @doc """
+  creates quick reply object to send to facebook
+
+  * :recepient - the recepient to send the message to
+  * :quick_reply - FacebookMessenger.Model.QuickReply.t
+  *
+  """
+  @spec payload_quick_reply(String.t, FacebookMessenger.Model.QuickReply.t) :: Map.t
+  def payload_quick_reply(recepient, quick_reply) do
+    %{
+      recipient: %{id: recepient},
+      message: quick_reply
+    }
   end
 
   @doc """
@@ -104,6 +137,19 @@ defmodule FacebookMessenger.Sender do
   @spec json_payload(String.t, String.t) :: String.t
   def json_payload(recepient, message) do
     payload(recepient, message)
+    |> Poison.encode
+    |> elem(1)
+  end
+
+  @doc """
+  creates a json payload quick reply to send to facebook
+
+  * :recepient - the recepient to send the message to
+  * :quick_reply - the message to send
+  """
+  @spec json_payload_quick_reply(String.t, FacebookMessenger.Model.QuickReply.t) :: String.t
+  def json_payload_quick_reply(recepient, quick_reply) do
+    payload_quick_reply(recepient, quick_reply)
     |> Poison.encode
     |> elem(1)
   end
