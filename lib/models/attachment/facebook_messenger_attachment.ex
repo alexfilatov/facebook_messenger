@@ -86,6 +86,7 @@ end
 defmodule FacebookMessenger.Model.Attachment.Template do
   @type t ::
   FacebookMessenger.Model.Attachment.Template.Generic.t
+  | FacebookMessenger.Model.Attachment.Template.List.t
   | FacebookMessenger.Model.Attachment.Template.Button.t
   | FacebookMessenger.Model.Attachment.Template.Receipt.t
 
@@ -100,6 +101,20 @@ defmodule FacebookMessenger.Model.Attachment.Template do
 
     def elements(template, elements) do
       # Kernel.put_in(template, [:payload, :elements], elements)
+      Kernel.put_in(template.payload.elements, elements)
+    end
+  end
+
+  defmodule List do
+    defstruct type: "template",
+    payload: %{template_type: "list", elements: [], buttons: nil}
+
+    @type t :: %List{
+      type: binary,
+      payload: %{template_type: binary, elements: List.t, buttons: List.t}
+    }
+
+    def elements(template, elements) do
       Kernel.put_in(template.payload.elements, elements)
     end
   end

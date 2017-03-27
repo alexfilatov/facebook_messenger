@@ -128,7 +128,6 @@ defmodule FacebookMessenger.Response do
   end
 
   defp text_message_parser() do
-    Logger.info "text_message_parser"
     %FacebookMessenger.Messaging{
       "type": "message",
       "sender": %FacebookMessenger.User{},
