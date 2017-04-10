@@ -117,6 +117,12 @@ defmodule FacebookMessenger.Model.Attachment.Template do
     def buttons(template, buttons) do
       Kernel.put_in(template.payload.buttons, buttons)
     end
+
+    def create(text, buttons) do
+      %FacebookMessenger.Model.Attachment.Template.Button{
+        payload: %{template_type: "button", text: text, buttons: buttons}
+      }
+    end
   end
 
   defmodule List do
