@@ -105,6 +105,20 @@ defmodule FacebookMessenger.Model.Attachment.Template do
     end
   end
 
+  defmodule Button do
+    defstruct type: "template",
+    payload: %{template_type: "button", text: nil, buttons: nil}
+
+    @type t :: %Button{
+      type: binary,
+      payload: %{template_type: binary, text: binary, buttons: List.t}
+    }
+
+    def buttons(template, buttons) do
+      Kernel.put_in(template.payload.buttons, buttons)
+    end
+  end
+
   defmodule List do
     defstruct type: "template",
     payload: %{template_type: "list", elements: [], buttons: nil}
