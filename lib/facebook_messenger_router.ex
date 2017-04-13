@@ -38,6 +38,8 @@ defmodule FacebookMessenger.Router do
 
   defp do_message(conn, _, opts) do
     {:ok, body, conn} = read_body(conn)
+    require Logger
+    Logger.debug "FACEBOOK MESSAGE BODY :: #{inspect body}"
 
     case FacebookMessenger.parse_message(body) do
       {:ok, message} ->
