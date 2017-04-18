@@ -65,6 +65,16 @@ defmodule FacebookMessenger.Response do
   end
 
   @doc """
+  Return an list of message recipient Ids from a `FacebookMessenger.Response`
+  """
+  @spec message_recipients(FacebookMessenger.Response) :: [String.t]
+  def message_recipients(%{entry: entries}) do
+    entries
+    |> get_messaging_struct()
+    |> Enum.map(&( &1 |> Map.get(:recipient) |> Map.get(:id)))
+  end
+
+  @doc """
   Return user defined postback payload from a `FacebookMessenger.Response`
   """
   @spec get_postback(FacebookMessenger.Response) :: FacebookMessenger.Postback.t
