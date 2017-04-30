@@ -128,6 +128,18 @@ defmodule FacebookMessenger.Sender do
   end
 
   @doc """
+  sends settings to
+
+  * :settings - the attachment FacebookMessenger.Model.Settings.t
+  * :page_access_token - page_access_token
+  """
+  @spec send_profile_settings(FacebookMessenger.Model.Settings.t, String.t) :: HTTPotion.Response.t
+  def send_profile_settings(settings, page_access_token) do
+    body = json_payload_settings(settings)
+    manager.post(url: messenger_profile_url(page_access_token), body: body)
+  end
+
+  @doc """
   creates quick reply object to send to facebook
 
   * :recepient - the recepient to send the message to
@@ -262,6 +274,14 @@ defmodule FacebookMessenger.Sender do
   def settings_url(page_access_token) do
     query = "access_token=#{page_access_token}"
     "https://graph.facebook.com/v2.6/me/thread_settings?#{query}"
+  end
+
+  @doc """
+  Profile settings URL
+  """
+  def messenger_profile_url(page_access_token) do
+    query = "access_token=#{page_access_token}"
+    "https://graph.facebook.com/v2.6/me/messenger_profile?#{query}"
   end
 
   defp page_token do

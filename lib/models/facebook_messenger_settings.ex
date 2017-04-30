@@ -12,3 +12,15 @@ defmodule FacebookMessenger.Model.Settings do
     call_to_actions: List.t
   }
 end
+
+defmodule FacebookMessenger.Model.ProfileSettings.PersistentMenu do
+  @moduledoc """
+  Facebook thread settings struct
+  """
+  @derive [Poison.Encoder]
+  defstruct [:persistent_menu]
+
+  @type t :: %FacebookMessenger.Model.ProfileSettings.PersistentMenu{
+    persistent_menu: List.t
+  }
+end
