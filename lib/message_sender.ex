@@ -4,6 +4,7 @@ defmodule FacebookMessenger.Sender do
   """
   require Logger
 
+  @fb_api_version "2.6"
 
   @doc """
   sends a message to the the recepient
@@ -88,7 +89,9 @@ defmodule FacebookMessenger.Sender do
   @spec send_attachment(String.t, FacebookMessenger.Model.Attachment.t) :: HTTPotion.Response.t
   def send_attachment(recepient, attachment) do
     body = json_payload_attachment(recepient, attachment)
-    manager.post(url: url, body: body)
+    res = manager.post(url: url, body: body)
+    Logger.info("RESPONSE FROM FB:: #{inspect(res)}")
+    res
   end
 
   @doc """
@@ -101,7 +104,9 @@ defmodule FacebookMessenger.Sender do
   @spec send_attachment(String.t, FacebookMessenger.Model.Attachment.t, String.t) :: HTTPotion.Response.t
   def send_attachment(recepient, attachment, page_access_token) do
     body = json_payload_attachment(recepient, attachment)
-    manager.post(url: url(page_access_token), body: body)
+    res = manager.post(url: url(page_access_token), body: body)
+    Logger.info("RESPONSE FROM FB:: #{inspect(res)}")
+    res
   end
 
   @doc """
@@ -112,7 +117,9 @@ defmodule FacebookMessenger.Sender do
   @spec send_settings(FacebookMessenger.Model.Settings.t) :: HTTPotion.Response.t
   def send_settings(settings) do
     body = json_payload_settings(settings)
-    manager.post(url: settings_url, body: body)
+    res = manager.post(url: settings_url, body: body)
+    Logger.info("RESPONSE FROM FB:: #{inspect(res)}")
+    res
   end
 
   @doc """
@@ -124,7 +131,9 @@ defmodule FacebookMessenger.Sender do
   @spec send_settings(FacebookMessenger.Model.Settings.t, String.t) :: HTTPotion.Response.t
   def send_settings(settings, page_access_token) do
     body = json_payload_settings(settings)
-    manager.post(url: settings_url(page_access_token), body: body)
+    res = manager.post(url: settings_url(page_access_token), body: body)
+    Logger.info("RESPONSE FROM FB:: #{inspect(res)}")
+    res
   end
 
   @doc """
@@ -136,7 +145,9 @@ defmodule FacebookMessenger.Sender do
   @spec send_profile_settings(FacebookMessenger.Model.Settings.t, String.t) :: HTTPotion.Response.t
   def send_profile_settings(settings, page_access_token) do
     body = json_payload_settings(settings)
-    manager.post(url: messenger_profile_url(page_access_token), body: body)
+    res = manager.post(url: messenger_profile_url(page_access_token), body: body)
+    Logger.info("RESPONSE FROM FB:: #{inspect(res)}")
+    res
   end
 
   @doc """
@@ -246,13 +257,12 @@ defmodule FacebookMessenger.Sender do
     |> elem(1)
   end
 
-
   @doc """
   return the url to hit to send the message
   """
   def url do
-    query = "access_token=#{page_token}"
-    "https://graph.facebook.com/v2.6/me/messages?#{query}"
+    query = "access_token=#{page_token()}"
+    "https://graph.facebook.com/v#{@fb_api_version}/me/messages?#{query}"
   end
 
   @doc """
@@ -260,12 +270,12 @@ defmodule FacebookMessenger.Sender do
   """
   def url(page_access_token) do
     query = "access_token=#{page_access_token}"
-    "https://graph.facebook.com/v2.6/me/messages?#{query}"
+    "https://graph.facebook.com/v#{@fb_api_version}/me/messages?#{query}"
   end
 
   def settings_url do
-    query = "access_token=#{page_token}"
-    "https://graph.facebook.com/v2.6/me/thread_settings?#{query}"
+    query = "access_token=#{page_token()}"
+    "https://graph.facebook.com/v#{@fb_api_version}/me/thread_settings?#{query}"
   end
 
   @doc """
@@ -273,7 +283,7 @@ defmodule FacebookMessenger.Sender do
   """
   def settings_url(page_access_token) do
     query = "access_token=#{page_access_token}"
-    "https://graph.facebook.com/v2.6/me/thread_settings?#{query}"
+    "https://graph.facebook.com/v#{@fb_api_version}/me/thread_settings?#{query}"
   end
 
   @doc """
@@ -281,7 +291,7 @@ defmodule FacebookMessenger.Sender do
   """
   def messenger_profile_url(page_access_token) do
     query = "access_token=#{page_access_token}"
-    "https://graph.facebook.com/v2.6/me/messenger_profile?#{query}"
+    "https://graph.facebook.com/v#{@fb_api_version}/me/messenger_profile?#{query}"
   end
 
   defp page_token do
